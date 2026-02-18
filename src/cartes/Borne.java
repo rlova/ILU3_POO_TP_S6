@@ -11,4 +11,9 @@ public class Borne extends Carte {
 	public Integer getKm() {
 		return km;
 	}
+	
+	@Override
+	public String toString() {
+		return km +" km";
+	}
 }

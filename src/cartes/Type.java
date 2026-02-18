@@ -6,27 +6,25 @@ public enum Type {
 	CREVAISON("Crevaison","Roue de secours","Increvable"),
 	ACCIDENT("Accident","Réparations","As du volant");
 
-	private String attaques;
-	private String parades;
-	private String bottes;
+	private String attaque;
+	private String parade;
+	private String botte;
 	
-	Type(String attaques, String parades, String bottes) {
-		this.attaques = attaques;
-		this.parades = parades;
-		this.bottes = bottes;
+	Type(String attaque, String parade, String botte) {
+		this.attaque = attaque;
+		this.parade = parade;
+		this.botte = botte;
 	}
 
-	public String getAttaques() {
-		return attaques;
+	public String getAttaque() {
+		return attaque;
 	}
 
-	public String getParades() {
-		return parades;
+	public String getParade() {
+		return parade;
 	}
 
-	public String getBottes() {
-		return bottes;
+	public String getBotte() {
+		return botte;
 	}
-	
-	
 }
