@@ -10,7 +10,7 @@ public enum Type {
 	private String parade;
 	private String botte;
 	
-	Type(String attaque, String parade, String botte) {
+	private Type(String attaque, String parade, String botte) {
 		this.attaque = attaque;
 		this.parade = parade;
 		this.botte = botte;

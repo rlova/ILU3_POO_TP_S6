@@ -1,14 +1,13 @@
 package cartes;
 
 public class Borne extends Carte {
-	private Integer km;
+	private int km;
 
 	public Borne(Integer km) {
-		super();
 		this.km = km;
 	}
 
-	public Integer getKm() {
+	public int getKm() {
 		return km;
 	}
 	

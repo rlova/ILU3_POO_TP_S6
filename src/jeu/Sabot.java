@@ -12,7 +12,6 @@ public class Sabot implements Iterable<Carte> {
 	private int nombreOperations = 0;
 	
 	public Sabot(Carte[] carteInitiale) {
-		super();
 		this.nbCartes = carteInitiale.length;
 		this.cartes = carteInitiale;
 	}
@@ -79,7 +78,9 @@ public class Sabot implements Iterable<Carte> {
 			nbCartes--;
 			indiceIterateur--;
 			nextEffectue = false;
-		}
+			nombreOperations++;
+			nombreOperationReference++;
+		} 
 		
 		private void verificationConcurrence() {
 			if (nombreOperations != nombreOperationReference) {
