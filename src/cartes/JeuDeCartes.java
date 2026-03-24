@@ -39,6 +39,24 @@ public class JeuDeCartes {
 		}
 		return cartes;
 	}
+	
+	public boolean checkCount() {
+		Carte[] cartes = donnerCartes();
+		for (Configuration configuration : typesDeCartes) {
+			int nombreCartes = 0;
+			int nbrCarteAttendu = configuration.nbExemplaires;
+			Carte carteAttendue = configuration.carte;
+			for (Carte carte : cartes) {
+				if (carte.equals(carteAttendue)) {
+					nombreCartes++;
+				}
+			}
+			if (nombreCartes!=nbrCarteAttendu) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 //	classe interne
 	private static class Configuration {

@@ -4,20 +4,19 @@ import cartes.Attaque;
 import cartes.Borne;
 import cartes.Parade;
 import cartes.Type;
+import cartes.Carte;
 
 public class TestMethodeEquals {
 	public static void main(String[] args) {
-		Borne carte1 = new Borne(25);
-		Borne carte2 = new Borne(25);
-		System.out.println("Les deux cartes de 25 km sont identiques ? " + carte1.equals(carte2));
-
-		
-		Attaque feu1 = new Attaque(Type.FEU);
-		Attaque feu2 = new Attaque(Type.FEU);
-		System.out.println("Deux cartes de feux rouge sont identiques ? " + feu1.equals(feu2));
+		Carte carte25Bornes1 = new Borne(25);
+		Carte carte25Bornes2 = new Borne(25);
+		System.out.println("Deux cartes de 25km sont identiques ? " + carte25Bornes1.equals(carte25Bornes2));
 	
-		Attaque rouge = new Attaque(Type.FEU);
-		Parade vert = new Parade(Type.FEU);
-		System.out.println("La carte feu rouge et la carte feu vert sont identiques ? "+ rouge.equals(vert));
+		Carte carteFeuxRouge1 = new Attaque(Type.FEU);
+		Carte carteFeuxRouge2 = new Attaque(Type.FEU);
+		System.out.println("Deux cartes de feux rouge sont identiques ? " + carteFeuxRouge1.equals(carteFeuxRouge2));
+		
+		Carte carteFeuxVert = new Parade(Type.FEU);
+		System.out.println("La carte feu rouge et la carte feu vert sont identiques ? " + carteFeuxRouge1.equals(carteFeuxVert));
 	}
 }
