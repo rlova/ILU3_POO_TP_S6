@@ -9,7 +9,12 @@ import java.util.ListIterator;
 import java.util.Random;
 
 public class GestionCartes {
+	private GestionCartes() {
+		throw new IllegalStateException("Gestion Cartes");
+	}
+
 	private static Random random = new Random();
+	
 	public  static <T> T extraire1(List<T> liste) {
 		int index = random.nextInt(liste.size());
 		return liste.remove(index);
@@ -33,9 +38,7 @@ public class GestionCartes {
 	}
 	
 	public static <T> boolean verifierMelange(List<T> liste1, List<T> liste2) {
-		if (liste1.size() != liste2.size()) {
-			return false;
-		}
+		if (liste1.size() != liste2.size()) return false;
 		for (T element : liste1) {
 			int freq1 = Collections.frequency(liste1, element);
 			int freq2 = Collections.frequency(liste2, element);
@@ -73,8 +76,8 @@ public class GestionCartes {
 	public static <T> boolean verifierRassemblement(List<T> liste) {
 		if (liste == null || liste.isEmpty() || liste.size() <=1) return true;
 		for (ListIterator<T> it = liste.listIterator(); it.hasNext();) {
-			T previous = it.next();
-			T current = it.next();
+			T previous = it.next();	// balayer la liste 
+			T current = it.next();	// balayer le reste de la liste
 			if (current!=null && previous!=null && !current.equals(previous)) {
 				ListIterator<T> resteListe = liste.listIterator(it.nextIndex());
 //				pour vérifier si l'ancien réapparait dans le reste de la liste
