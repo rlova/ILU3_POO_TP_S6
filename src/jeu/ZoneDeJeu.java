@@ -5,11 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cartes.Attaque;
 import cartes.Bataille;
 import cartes.Borne;
 import cartes.Botte;
 import cartes.Carte;
 import cartes.Cartes;
+import cartes.DebutLimite;
 import cartes.FinLimite;
 import cartes.Limite;
 import cartes.Parade;
@@ -79,7 +81,7 @@ public class ZoneDeJeu {
 				|| (sommet instanceof Parade && !sommet.equals(Cartes.FEU_VERT));
 	}
 
-	public boolean estDepotLimiteAutorise(Borne borne) {
+	public boolean estDepotBorneAutorise(Borne borne) {
 		if (!peutAvancer()) {
 			return false;
 		}
@@ -90,4 +92,34 @@ public class ZoneDeJeu {
 		return sommeBornes <= 1000;
 	}
 
+	public boolean estDepotLimiteAutorise(Limite limite) {
+		if (limite instanceof DebutLimite) {
+			Limite sommet = pileLimites.get(pileLimites.size() - 1);
+			return pileLimites.isEmpty() || sommet instanceof FinLimite;
+		}
+		if (limite instanceof FinLimite) {
+			Limite sommet = pileLimites.get(pileLimites.size() - 1);
+			return sommet instanceof DebutLimite;
+		}
+		return false;
+	}
+	
+	public boolean estDepotBatailleAutorise(Bataille bataille) {
+		if (bataille instanceof Attaque) {
+			return peutAvancer();
+		}
+		if (bataille instanceof Parade) {
+			Probleme sommet = pileBatailles.get(pileBatailles.size()-1);
+			if (bataille.equals(Cartes.FEU_VERT)) { 
+				return pileBatailles.isEmpty() || sommet.equals(Cartes.FEU_ROUGE) 
+						|| ((sommet instanceof Parade) && sommet.getType().equals(bataille.getType()));
+			} else {
+				if (pileBatailles.isEmpty()) {
+					return false;
+				}
+				return (sommet instanceof Attaque) && (sommet.getType().equals(bataille.getType()));
+			}
+		} 
+		return false;
+	}
 }
