@@ -2,15 +2,29 @@ package jeu;
 
 import java.util.Objects;
 
+import cartes.Carte;
+
 public class Joueur {
 	private String nom;
 	private ZoneDeJeu zoneDeJeu;
+	private MainJoueur main;
 	
 	private Joueur(String nom) {
 		this.nom = nom;
 		this.zoneDeJeu = new ZoneDeJeu();
 	}
 
+	public void donner(Carte c) {
+		main.prendre(c);
+	}
+	
+	public Carte prendreCarte(Sabot sabot) {
+		if (sabot.estVide()) return null;
+		Carte c = sabot.piocher();
+		main.prendre(c);
+		return c;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(nom);
