@@ -25,6 +25,10 @@ public class Joueur {
 		return c;
 	}
 	
+	public int donnerKmParcourus() {
+		return zoneDeJeu.donnerKmParcourus();
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(nom);

@@ -1,6 +1,6 @@
 package cartes;
 
-public class DebuLimite extends Limite {
+public class DebutLimite extends Limite {
 
 	@Override
 	public String toString() {
