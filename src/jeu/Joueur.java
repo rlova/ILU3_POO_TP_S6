@@ -9,11 +9,16 @@ public class Joueur {
 	private ZoneDeJeu zoneDeJeu;
 	private MainJoueur main;
 	
-	private Joueur(String nom) {
-		this.nom = nom;
-		this.zoneDeJeu = new ZoneDeJeu();
-	}
+//	private Joueur(String nom) {
+//		this.nom = nom;
+//		this.main = new MainJoueur();
+//		this.zoneDeJeu = new ZoneDeJeu();
+//	}
 
+	public boolean estDepotAutorise(Carte carte) {
+		return zoneDeJeu.estDepotAutorise(carte);
+	}
+	
 	public void donner(Carte c) {
 		main.prendre(c);
 	}

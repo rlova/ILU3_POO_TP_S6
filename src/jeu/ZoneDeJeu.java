@@ -31,13 +31,8 @@ public class ZoneDeJeu {
 		this.bottes = new HashSet<>();
 	}
 
-	public boolean estPrioritaire() {
-		Botte bottePrioritaire = new Botte(Type.FEU);
-		return bottes.contains(Cartes.PRIORITAIRE);
-	}
-
 	public int donnerLimitationVitesse() {
-		if (estPrioritaire()) {
+		if (bottes.contains(Cartes.PRIORITAIRE)) {
 			return 200;
 		}
 		if (pileLimites.isEmpty()) {
@@ -60,25 +55,29 @@ public class ZoneDeJeu {
 
 	public void deposer(Carte c) {
 		if (c instanceof Borne borne) {
-			collectionBornes.add((Borne) c);
+			collectionBornes.add(borne);
 		}
 		if (c instanceof Limite limite) {
-			pileLimites.add((Limite) c);
+			pileLimites.add(limite);
 		}
 		if (c instanceof Bataille bataille) {
-			pileBatailles.add((Bataille) c);
+			pileBatailles.add(bataille);
 		}
 	}
 
 	public boolean peutAvancer() {
+		if (pileBatailles.isEmpty())
+			return false;
 		Probleme sommet = pileBatailles.get(pileBatailles.size() - 1);
-		return !(pileBatailles.isEmpty()) && sommet.equals(Cartes.FEU_VERT);
+//		return !(pileBatailles.isEmpty()) && sommet.equals(Cartes.FEU_VERT);
+		return (sommet instanceof Parade) && sommet.getType() == Type.FEU;
+
 	}
 
 	public boolean estDepotFeuVertAutorise() {
 		Probleme sommet = pileBatailles.get(pileBatailles.size() - 1);
-		return pileBatailles.isEmpty() || sommet.equals(Cartes.FEU_ROUGE)
-				|| (sommet instanceof Parade && !sommet.equals(Cartes.FEU_VERT));
+		return pileBatailles.isEmpty() || (sommet instanceof Attaque && sommet.getType() == Type.FEU)
+				|| (sommet instanceof Parade && sommet.getType() != Type.FEU);
 	}
 
 	public boolean estDepotBorneAutorise(Borne borne) {
@@ -93,33 +92,44 @@ public class ZoneDeJeu {
 	}
 
 	public boolean estDepotLimiteAutorise(Limite limite) {
+		if (pileLimites.isEmpty())
+			return (limite instanceof DebutLimite); // true si c'est un début
+		Limite sommet = pileLimites.get(pileLimites.size() - 1);
 		if (limite instanceof DebutLimite) {
-			Limite sommet = pileLimites.get(pileLimites.size() - 1);
 			return pileLimites.isEmpty() || sommet instanceof FinLimite;
 		}
 		if (limite instanceof FinLimite) {
-			Limite sommet = pileLimites.get(pileLimites.size() - 1);
-			return sommet instanceof DebutLimite;
+			return (sommet instanceof DebutLimite);
 		}
 		return false;
 	}
-	
+
 	public boolean estDepotBatailleAutorise(Bataille bataille) {
 		if (bataille instanceof Attaque) {
 			return peutAvancer();
 		}
 		if (bataille instanceof Parade) {
-			Probleme sommet = pileBatailles.get(pileBatailles.size()-1);
-			if (bataille.equals(Cartes.FEU_VERT)) { 
-				return pileBatailles.isEmpty() || sommet.equals(Cartes.FEU_ROUGE) 
-						|| ((sommet instanceof Parade) && sommet.getType().equals(bataille.getType()));
+			Probleme sommet = pileBatailles.isEmpty() ? null : pileBatailles.get(pileBatailles.size() - 1);
+			if (bataille.equals(Cartes.FEU_VERT)) {
+				return pileBatailles.isEmpty() || (sommet instanceof Attaque && sommet.getType() == Type.FEU)
+						|| (sommet instanceof Parade && sommet.getType() != Type.FEU);
 			} else {
 				if (pileBatailles.isEmpty()) {
 					return false;
 				}
-				return (sommet instanceof Attaque) && (sommet.getType().equals(bataille.getType()));
+				return (sommet instanceof Attaque) && (sommet.getType() == bataille.getType());
 			}
-		} 
+		}
+		return false;
+	}
+
+	public boolean estDepotAutorise(Carte carte) {
+		if (carte instanceof Borne borne)
+			return estDepotBorneAutorise(borne);
+		if (carte instanceof Limite limite)
+			return estDepotLimiteAutorise(limite);
+		if (carte instanceof Bataille bataille)
+			return estDepotBatailleAutorise(bataille);
 		return false;
 	}
 }
