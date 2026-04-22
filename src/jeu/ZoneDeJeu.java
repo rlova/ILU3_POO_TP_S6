@@ -22,19 +22,14 @@ public class ZoneDeJeu {
 	private List<Limite> pileLimites;
 	private List<Probleme> pileBatailles;
 	private List<Borne> collectionBornes;
-	private Set<Botte> bottes;
 
 	public ZoneDeJeu() {
 		this.pileLimites = new ArrayList<>();
 		this.pileBatailles = new ArrayList<>();
 		this.collectionBornes = new ArrayList<>();
-		this.bottes = new HashSet<>();
 	}
 
 	public int donnerLimitationVitesse() {
-		if (bottes.contains(Cartes.PRIORITAIRE)) {
-			return 200;
-		}
 		if (pileLimites.isEmpty()) {
 			return 200;
 		}
@@ -69,7 +64,6 @@ public class ZoneDeJeu {
 		if (pileBatailles.isEmpty())
 			return false;
 		Probleme sommet = pileBatailles.get(pileBatailles.size() - 1);
-//		return !(pileBatailles.isEmpty()) && sommet.equals(Cartes.FEU_VERT);
 		return (sommet instanceof Parade) && sommet.getType() == Type.FEU;
 
 	}
