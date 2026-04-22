@@ -8,26 +8,20 @@ public class Joueur {
 	private String nom;
 	private ZoneDeJeu zoneDeJeu;
 	private MainJoueur main;
-	
-//	private Joueur(String nom) {
-//		this.nom = nom;
-//		this.main = new MainJoueur();
-//		this.zoneDeJeu = new ZoneDeJeu();
-//	}
 
 	public boolean estDepotAutorise(Carte carte) {
 		return zoneDeJeu.estDepotAutorise(carte);
 	}
 	
-	public void donner(Carte c) {
-		main.prendre(c);
+	public void donner(Carte carte) {
+		main.prendre(carte);
 	}
 	
 	public Carte prendreCarte(Sabot sabot) {
 		if (sabot.estVide()) return null;
-		Carte c = sabot.piocher();
-		main.prendre(c);
-		return c;
+		Carte carte = sabot.piocher();
+		main.prendre(carte);
+		return carte;
 	}
 	
 	public int donnerKmParcourus() {
@@ -41,14 +35,8 @@ public class Joueur {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		Joueur other = (Joueur) obj;
-		return Objects.equals(nom, other.nom);
+		return obj != null && Objects.equals(nom, other.nom);
 	}
 
 	@Override

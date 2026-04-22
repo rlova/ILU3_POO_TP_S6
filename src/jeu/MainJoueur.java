@@ -1,13 +1,13 @@
 package jeu;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import cartes.Carte;
 
 public class MainJoueur implements Iterable<Carte>{
-	private List<Carte> cartes = new ArrayList<>();
+	private List<Carte> cartes = new LinkedList<>();
 	
 	public void prendre(Carte c) {
 		cartes.add(c);
